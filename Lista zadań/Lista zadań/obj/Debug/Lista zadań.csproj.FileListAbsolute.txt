@@ -1,0 +1,30 @@
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\bin\Debug\Lista zadań.exe.config
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\bin\Debug\Lista zadań.exe
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\bin\Debug\Lista zadań.pdb
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.csproj.AssemblyReference.cache
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\MainWindow.g.cs
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\App.g.cs
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań_MarkupCompile.cache
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań_MarkupCompile.lref
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\MainWindow.baml
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.g.resources
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\Lista_zadań.Properties.Resources.resources
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.csproj.GenerateResource.cache
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.csproj.CoreCompileInputs.cache
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.exe
+C:\Users\smies\source\repos\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.pdb
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\bin\Debug\Lista zadań.exe.config
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\bin\Debug\Lista zadań.exe
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\bin\Debug\Lista zadań.pdb
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.csproj.AssemblyReference.cache
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\MainWindow.g.cs
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\App.g.cs
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań_MarkupCompile.cache
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań_MarkupCompile.lref
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\MainWindow.baml
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.g.resources
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\Lista_zadań.Properties.Resources.resources
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.csproj.GenerateResource.cache
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.csproj.CoreCompileInputs.cache
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.exe
+C:\Users\smies\source\projekt\projekt\Lista zadań\Lista zadań\obj\Debug\Lista zadań.pdb

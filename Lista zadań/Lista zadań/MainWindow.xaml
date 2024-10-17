@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="Lista Zadań" Height="450" Width="780" >
     <Grid Margin="0,-31,-18,-33">
-        <TextBox Name="fgfxhjhcgcgzg" Height="40" Margin="20,10,185,376"/>
-        <Button Content="gxhvxgtjccgj" Height="33.3" Width="120" Margin="600,10,20,374" Click="Cos"/>
-        <ListBox Name="vhkcjkchkxasrr" Height="325" Margin="0,82,40,33" HorizontalAlignment="Right" Width="720"/>
+        <TextBox Name="TaskInput" Height="40" Margin="20,10,185,376"/>
+        <Button Content="Dodaj zadanie" Height="33.3" Width="120" Margin="600,10,20,374" Click="Add_Task"/>
+        <ListBox Name="TaskList" Height="325" Margin="0,82,40,33" HorizontalAlignment="Right" Width="720"/>
     </Grid>
 </Window>

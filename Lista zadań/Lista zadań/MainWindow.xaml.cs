@@ -25,10 +25,10 @@ namespace Lista_zadań
 
         private void Cos(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(fgfxhjhcgcgzg.Text))
+            if (!string.IsNullOrEmpty(TaskInput.Text))
             {
-                vhkcjkchkxasrr.Items.Add(fgfxhjhcgcgzg.Text);
-                fgfxhjhcgcgzg.Clear();
+                TaskList.Items.Add(TaskInput.Text);
+                TaskInput.Clear();
             }
         }
     }

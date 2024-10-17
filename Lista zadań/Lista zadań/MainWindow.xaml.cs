@@ -23,7 +23,7 @@ namespace Lista_zadań
             InitializeComponent();
         }
 
-        private void Cos(object sender, EventArgs e)
+        private void Add_Task(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(TaskInput.Text))
             {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,10 +14,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Lista_zadań
-        {
+{
 
     public partial class MainWindow : Window
-        {
+    {
         public MainWindow()
         {
             InitializeComponent();
@@ -28,14 +28,13 @@ namespace Lista_zadań
             AddTaskToList(TaskInput.Text);
         }
 
-private void AddTaskToList(string task)
+        private void AddTaskToList(string task)
         {
-    if (!string.IsNullOrEmpty(task))
-        {
-        TaskList.Items.Add(task);
-        TaskInput.Clear();
+            if (!string.IsNullOrEmpty(task))
+            {
+                TaskList.Items.Add(task);
+                TaskInput.Clear();
+            }
         }
-        }
-        }
-        }
- 
+    }
+}

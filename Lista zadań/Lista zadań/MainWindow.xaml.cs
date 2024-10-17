@@ -14,10 +14,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Lista_zadań
-{
+        {
 
     public partial class MainWindow : Window
-    {
+        {
         public MainWindow()
         {
             InitializeComponent();
@@ -25,12 +25,17 @@ namespace Lista_zadań
 
         private void Add_Task(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(TaskInput.Text))
-            {
-                TaskList.Items.Add(TaskInput.Text);
-                TaskInput.Clear();
-            }
+            AddTaskToList(TaskInput.Text);
         }
-    }
-}
+
+private void AddTaskToList(string task)
+        {
+    if (!string.IsNullOrEmpty(task))
+        {
+        TaskList.Items.Add(task);
+        TaskInput.Clear();
+        }
+        }
+        }
+        }
  

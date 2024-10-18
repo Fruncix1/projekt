@@ -29,6 +29,8 @@ namespace Lista_zadań
             _taskManager.AddTask(TaskInput.Text);
             TaskInput.Clear();
             RefreshTaskList();
+
+            // MessageBox.Show("Zadanie dodane!");
         }
 
         private void Remove_Task(object sender, EventArgs e)
@@ -38,6 +40,8 @@ namespace Lista_zadań
                 _taskManager.RemoveTask(TaskList.SelectedItem.ToString());
                 RefreshTaskList();
             }
+
+            // MessageBox.Show("Zadanie usunięte!");
         }
 
         private void RefreshTaskList()

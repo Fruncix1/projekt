@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lista_zadań"
         mc:Ignorable="d"
-        Title="Lista Zadań" Height="450" Width="780" >
-    <Grid Margin="0,-31,-18,-33">
-        <TextBox Name="TaskInput" Height="40" Margin="20,10,185,376"/>
-        <Button Content="Dodaj zadanie" Height="33.3" Width="120" Margin="600,10,20,374" Click="Add_Task"/>
-        <ListBox Name="TaskList" Height="325" Margin="0,82,40,33" HorizontalAlignment="Right" Width="720">
+        Title="Lista Zadań" Height="562.5" Width="975" >
+    <Grid Margin="-18,-69,-43,-84">
+        <TextBox Name="TaskInput" Height="40" Margin="45,103,195,512"/>
+        <DatePicker Name="ReminderDatePicker" Width="400" Height="30" Margin="45,68,573,557"/>
+        <Button Content="Dodaj zadanie" Height="33.3" Width="120" Margin="831,94,54,503" Click="Add_Task"/>
+        <ListBox Name="TaskList" Height="406.25" Margin="0,145,73,60" HorizontalAlignment="Right" Width="900">
             <ListBox.ContextMenu>
-            <ContextMenu>
+                <ContextMenu>
                     <MenuItem Header="Usuń zadanie" Click="Remove_Task"/>
                 </ContextMenu>
             </ListBox.ContextMenu>

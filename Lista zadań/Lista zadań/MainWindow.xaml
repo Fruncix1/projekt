@@ -9,6 +9,10 @@
     <Grid Margin="-18,-69,-43,-84">
         <TextBox Name="TaskInput" Height="40" Margin="45,103,195,512"/>
         <DatePicker Name="ReminderDatePicker" Width="400" Height="30" Margin="45,68,573,557"/>
+        <StackPanel>
+        <TextBlock Text="Wpisz godzinę (HH:mm):" Margin="101,80,40,0" Width="149" />
+        <TextBox x:Name="ReminderTimeInput" Margin="315,-15,40,0" Width="98" />
+        </StackPanel>
         <Button Content="Dodaj zadanie" Height="33.3" Width="120" Margin="831,94,54,503" Click="Add_Task"/>
         <ListBox Name="TaskList" Height="406.25" Margin="0,145,73,60" HorizontalAlignment="Right" Width="900">
             <ListBox.ContextMenu>

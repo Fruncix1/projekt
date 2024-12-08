@@ -20,42 +20,62 @@ namespace Lista_zadań
     {
         // Tworzenie instancji menedżera zadań
         private TaskManager _taskManager = new TaskManager();
+        private System.Windows.Threading.DispatcherTimer _reminderTimer;
 
         // Konstruktor klasy MainWindow
         public MainWindow()
         {
             InitializeComponent(); // Inicjalizacja komponentów interfejsu użytkownika
+            _reminderTimer = new System.Windows.Threading.DispatcherTimer();
+            _reminderTimer.Interval = TimeSpan.FromSeconds(10);
+            _reminderTimer.Tick += CheckReminders;
+            _reminderTimer.Start();
         }
 
         // Metoda obsługująca dodawanie nowego zadania
-        private void Add_Task(object sender, EventArgs e)
+        private void Add_Task(object sender, RoutedEventArgs e)
         {
             // Pobranie wybranej daty przypomnienia
             DateTime? reminderDate = ReminderDatePicker.SelectedDate;
 
-            // Dodanie zadania do menedżera zadań
-            _taskManager.AddTask(TaskInput.Text, reminderDate);
+            // Pobranie godziny z pola tekstowego
+            TimeSpan selectedTime;
+            if (TimeSpan.TryParse(ReminderTimeInput.Text, out selectedTime))
+            {
+                if (reminderDate.HasValue)
+                {
+                    // Połączenie daty i godziny
+                    DateTime reminderDateTime = reminderDate.Value.Date + selectedTime;
 
-            // Wyczyść pole tekstowe i datę przypomnienia po dodaniu zadania
-            TaskInput.Clear();
-            ReminderDatePicker.SelectedDate = null;
+                    // Dodanie zadania do menedżera zadań
+                    _taskManager.AddTask(TaskInput.Text, reminderDateTime);
 
-            // Odświeżenie listy zadań, aby pokazać nowo dodane zadanie
-            RefreshTaskList();
+                    // Wyczyść pole tekstowe i datę przypomnienia po dodaniu zadania
+                    TaskInput.Clear();
+                    ReminderDatePicker.SelectedDate = null;
+                    ReminderTimeInput.Clear();
+
+                    // Odświeżenie listy zadań, aby pokazać nowo dodane zadanie
+                    RefreshTaskList();
+                }
+                else
+                {
+                    MessageBox.Show("Wybierz datę przypomnienia!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
         }
 
         // Metoda obsługująca usuwanie wybranego zadania
-        private void Remove_Task(object sender, EventArgs e)
+        private void Remove_Task(object sender, RoutedEventArgs e)
         {
-            // Sprawdzenie, czy zostało wybrane zadanie
-            if (TaskList.SelectedItem != null)
-            {
-                // Usunięcie zadania z menedżera zadań na podstawie jego nazwy
-                _taskManager.RemoveTask(TaskList.SelectedItem.ToString());
+          if (TaskList.SelectedItem is Task selectedTask)
+          {
+              // Usunięcie zadania na podstawie obiektu Task
+              _taskManager.RemoveTask(selectedTask);
 
-                // Odświeżenie listy zadań po usunięciu zadania
-                RefreshTaskList();
-            }
+              // Odświeżenie listy zadań po usunięciu zadania
+              RefreshTaskList();
+          }
         }
 
         // Metoda odświeżająca widok listy zadań
@@ -71,24 +91,45 @@ namespace Lista_zadań
             }
         }
 
+        private void CheckReminders(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+
+            foreach (var task in _taskManager.Tasks)
+            {
+                if (task.ReminderDate.HasValue && task.ReminderDate.Value <= now && !task.IsReminderTriggered)
+                {
+                    MessageBox.Show($"Przypomnienie: {task.Name}\nCzas: {task.ReminderDate.Value:g}",
+                                    "Powiadomienie",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Information);
+                    task.IsReminderTriggered = true;
+                }
+            }
+
+            RefreshTaskList();
+        }
+
         // Klasa reprezentująca pojedyncze zadanie
         public class Task
         {
             public string Name { get; set; } // Nazwa zadania
-            public DateTime? ReminderDate { get; set; } // Opcjonalna data przypomnienia
+            public DateTime? ReminderDate { get; set; } // Data i godzina przypomnienia
+            public bool IsReminderTriggered { get; set; } // Flaga dla przypomnienia
 
             // Konstruktor zadania
             public Task(string name, DateTime? reminderDate = null)
             {
                 Name = name;
                 ReminderDate = reminderDate;
+                IsReminderTriggered = false;
             }
 
             // Przeciążenie metody ToString() do wyświetlania zadania
             public override string ToString()
             {
                 return ReminderDate.HasValue
-                    ? $"{Name} (Przypomnienie: {ReminderDate.Value.ToShortDateString()})"
+                    ? $"{Name} (Przypomnienie: {ReminderDate.Value:dd.MM.yyyy HH:mm})"
                     : Name;
             }
         }
@@ -108,13 +149,14 @@ namespace Lista_zadań
             }
 
             // Metoda usuwająca zadanie z listy na podstawie jego nazwy
-            public void RemoveTask(string taskName)
+            public void RemoveTask(Task taskToRemove)
             {
-                _tasks.RemoveAll(task => task.Name == taskName);
+                _tasks.Remove(taskToRemove);
             }
 
             // Właściwość zwracająca listę zadań jako tylko do odczytu
             public IReadOnlyList<Task> Tasks => _tasks.AsReadOnly();
         }
     }
+
 }

@@ -27,7 +27,7 @@ namespace Lista_zadań
         {
             InitializeComponent(); // Inicjalizacja komponentów interfejsu użytkownika
             _reminderTimer = new System.Windows.Threading.DispatcherTimer();
-            _reminderTimer.Interval = TimeSpan.FromSeconds(10);
+            _reminderTimer.Interval = TimeSpan.FromSeconds(2);
             _reminderTimer.Tick += CheckReminders;
             _reminderTimer.Start();
         }
@@ -35,27 +35,25 @@ namespace Lista_zadań
         // Metoda obsługująca dodawanie nowego zadania
         private void Add_Task(object sender, RoutedEventArgs e)
         {
-            // Pobranie wybranej daty przypomnienia
             DateTime? reminderDate = ReminderDatePicker.SelectedDate;
-
-            // Pobranie godziny z pola tekstowego
             TimeSpan selectedTime;
+
             if (TimeSpan.TryParse(ReminderTimeInput.Text, out selectedTime))
             {
                 if (reminderDate.HasValue)
                 {
-                    // Połączenie daty i godziny
                     DateTime reminderDateTime = reminderDate.Value.Date + selectedTime;
 
-                    // Dodanie zadania do menedżera zadań
-                    _taskManager.AddTask(TaskInput.Text, reminderDateTime);
+                    // Pobranie wybranego priorytetu
+                    Priority selectedPriority = (Priority)PriorityComboBox.SelectedIndex;
 
-                    // Wyczyść pole tekstowe i datę przypomnienia po dodaniu zadania
+                    _taskManager.AddTask(TaskInput.Text, reminderDateTime, selectedPriority);
+
                     TaskInput.Clear();
                     ReminderDatePicker.SelectedDate = null;
                     ReminderTimeInput.Clear();
+                    PriorityComboBox.SelectedIndex = 1; // Reset do domyślnego (Średni)
 
-                    // Odświeżenie listy zadań, aby pokazać nowo dodane zadanie
                     RefreshTaskList();
                 }
                 else
@@ -64,6 +62,7 @@ namespace Lista_zadań
                 }
             }
         }
+
 
         // Metoda obsługująca usuwanie wybranego zadania
         private void Remove_Task(object sender, RoutedEventArgs e)
@@ -110,29 +109,42 @@ namespace Lista_zadań
             RefreshTaskList();
         }
 
+
+        // Priorytety dla zadań
+        public enum Priority
+        {
+            Niski,
+            Średni,
+            Wysoki,
+            Krytyczny
+        }
+
         // Klasa reprezentująca pojedyncze zadanie
         public class Task
         {
             public string Name { get; set; } // Nazwa zadania
             public DateTime? ReminderDate { get; set; } // Data i godzina przypomnienia
             public bool IsReminderTriggered { get; set; } // Flaga dla przypomnienia
+            public Priority PriorityLevel { get; set; } // Priorytet zadania
 
-            // Konstruktor zadania
-            public Task(string name, DateTime? reminderDate = null)
+            // Konstruktor zadania z priorytetem
+            public Task(string name, DateTime? reminderDate = null, Priority priority = Priority.Średni)
             {
                 Name = name;
                 ReminderDate = reminderDate;
                 IsReminderTriggered = false;
+                PriorityLevel = priority;
             }
 
             // Przeciążenie metody ToString() do wyświetlania zadania
             public override string ToString()
             {
                 return ReminderDate.HasValue
-                    ? $"{Name} (Przypomnienie: {ReminderDate.Value:dd.MM.yyyy HH:mm})"
-                    : Name;
+                    ? $"{Name} [Priorytet: {PriorityLevel}] (Przypomnienie: {ReminderDate.Value:dd.MM.yyyy HH:mm})"
+                    : $"{Name} [Priorytet: {PriorityLevel}]";
             }
         }
+
 
         // Klasa menedżera zadań, odpowiedzialna za zarządzanie listą zadań
         public class TaskManager
@@ -140,11 +152,12 @@ namespace Lista_zadań
             private List<Task> _tasks = new List<Task>(); // Lista przechowująca wszystkie zadania
 
             // Metoda dodająca zadanie do listy
-            public void AddTask(string taskName, DateTime? reminderDate = null)
+            public void AddTask(string taskName, DateTime? reminderDate = null, Priority priority = Priority.Średni)
             {
                 if (!string.IsNullOrEmpty(taskName))
                 {
-                    _tasks.Add(new Task(taskName, reminderDate));
+                    _tasks.Add(new Task(taskName, reminderDate, priority));
+                    _tasks = _tasks.OrderByDescending(t => t.PriorityLevel).ToList(); // Sortowanie po priorytecie
                 }
             }
 
@@ -157,6 +170,7 @@ namespace Lista_zadań
             // Właściwość zwracająca listę zadań jako tylko do odczytu
             public IReadOnlyList<Task> Tasks => _tasks.AsReadOnly();
         }
+
     }
 
 }

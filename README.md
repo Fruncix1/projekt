@@ -30,5 +30,3 @@ Interakcja z użytkownikiem odbywa się przez intuicyjny graficzny interfejs uż
 - Rozszerzono metodę `Add_Task`, aby akceptowała nie tylko datę przypomnienia, ale także godzinę.
 - Dodano obsługę priorytetów zadań, umożliwiając wybór jednego z czterech poziomów priorytetu.
 - Zadania są automatycznie sortowane według priorytetu, dzięki czemu najważniejsze pojawiają się na górze listy.
-- Naprawiono błąd związany z nieprawidłowym odświeżaniem listy po dodaniu nowego zadania.
-

@@ -1,32 +1,54 @@
 # Lista Zadań
 
 ## Opis aplikacji
-Aplikacja Lista Zadań służy do zarządzania zadaniami użytkownika oraz planowania przypomień. Umożliwia dodawanie, edytowanie, usuwanie i filtrowanie zadań, a także ustawianie przypomień na wybrane daty oraz priorytetów zadań.
+Aplikacja Lista Zadań służy do organizowania codziennych obowiązków. Umożliwia dodawanie, edytowanie, usuwanie i filtrowanie zadań, a także ustawianie przypomnień na określone daty oraz nadawanie im priorytetów.
 
 ## Cel aplikacji
-Celem aplikacji jest ułatwienie zarządzania codziennymi zadaniami, przypominanie użytkownikowi o nadchodzących terminach oraz organizacja zadań według priorytetów. Pomaga osobom, które mają wiele zadań do wykonania i potrzebują skutecznego systemu przypomnień.
+Aplikacja pomaga użytkownikowi skutecznie zarządzać zadaniami poprzez:
+
+Przypomnienia o ważnych zadaniach, aby użytkownik nie zapomniał o terminach.
+
+Priorytetyzację obowiązków, by najważniejsze zadania były wyróżnione.
+
+Łatwość organizacji – intuicyjny interfejs pozwala szybko dodawać, edytować i usuwać zadania.
 
 ## Zasada działania
-Aplikacja działa na zasadzie listy zadań, do której użytkownik może dodawać zadania wraz z przypomnieniami na określoną datę oraz określać ich priorytety. Główne funkcje obejmują:
-- Dodawanie nowego zadania z opcjonalnym przypomnieniem oraz priorytetem (niski, średni, wysoki, krytyczny).
-- Edytowanie zadań.
-- Usuwanie zadań.
-- Filtrowanie zadań według daty oraz priorytetu.
-- Powiadamianie użytkownika o nadchodzących zadaniach w dniu przypomnienia.
-- Automatyczne sortowanie zadań według priorytetu, aby najważniejsze zadania pojawiały się na górze listy.
+Aplikacja działa jako lista zadań, w której użytkownik może dodawać i zarządzać zadaniami.
+
+## Główne funkcje aplikacji
+ Dodawanie zadania – użytkownik może wpisać nazwę zadania, ustawić priorytet oraz opcjonalnie dodać przypomnienie na wybraną datę i godzinę.
+ Sortowanie – zadania są automatycznie układane według priorytetu (Krytyczny, Wysoki, Średni, Niski).
+ Usuwanie zadań – możliwość szybkiego usunięcia zadania po jego wykonaniu.
+ Powiadomienia – aplikacja sprawdza co 2 sekundy, czy jest zadanie do przypomnienia i wyświetla komunikat.
+ Filtrowanie zadań – użytkownik może wyświetlać tylko zadania o określonym priorytecie lub w wybranym zakresie dat.
 
 ## Interakcja z użytkownikiem
-Interakcja z użytkownikiem odbywa się przez intuicyjny graficzny interfejs użytkownika (GUI) oparty na technologii WPF (Windows Presentation Foundation). Użytkownik ma dostęp do następujących elementów interfejsu:
-1. Użytkownik wpisuje nazwę zadania.
-2. Użytkownik wybiera datę i godzinę, kiedy chce otrzymać przypomnienie o zadaniu.
-3. Użytkownik może przypisać zadaniu priorytet (niski, średni, wysoki, krytyczny).
-4. Przycisk "Dodaj zadanie" umożliwia dodanie nowego zadania do listy.
-5. Użytkownik widzi wszystkie dodane zadania, które są sortowane według priorytetu oraz może je edytować lub usuwać.
-6. Użytkownik może filtrować zadania według priorytetu oraz daty przypomnienia.
-7. System automatycznie sprawdza przypomnienia co 10 sekund i wyświetla powiadomienia o nadchodzących zadaniach.
+Interfejs aplikacji został stworzony w Windows Presentation Foundation (WPF), dzięki czemu użytkownik korzysta z aplikacji w sposób intuicyjny.
+
+### Dodawanie zadania:
+
+Wprowadzenie nazwy zadania.
+
+Opcjonalne ustawienie daty i godziny przypomnienia.
+
+Wybranie priorytetu (Niski, Średni, Wysoki, Krytyczny).
+
+Kliknięcie przycisku „Dodaj zadanie”.
+
+### Zarządzanie listą zadań:
+
+Zadania wyświetlane są w kolejności priorytetów.
+
+Kliknięcie w zadanie pozwala je usunąć.
+
+System automatycznie sprawdza przypomnienia i wyświetla powiadomienia.
 
 ## Najnowsze zmiany
-- Wprowadzono mechanizm przypomnień za pomocą `DispatcherTimer`, który sprawdza zadania co 10 sekund i wyświetla powiadomienia o zbliżającym się terminie.
-- Rozszerzono metodę `Add_Task`, aby akceptowała nie tylko datę przypomnienia, ale także godzinę.
-- Dodano obsługę priorytetów zadań, umożliwiając wybór jednego z czterech poziomów priorytetu.
-- Zadania są automatycznie sortowane według priorytetu, dzięki czemu najważniejsze pojawiają się na górze listy.
+ Dodano powiadomienia o przypomnieniach – aplikacja sprawdza listę co 2 sekundy i wyświetla komunikat, jeśli nadeszła godzina przypomnienia.
+ Obsługa priorytetów – użytkownik może określić priorytet zadania, a aplikacja automatycznie sortuje listę.
+ Lepsza organizacja kodu – kod został zoptymalizowany zgodnie z zasadami Clean Code (KISS, DRY, SOLID).
+
+## Plany na przyszłość
+ Edycja zadań – możliwość zmiany nazwy, daty i priorytetu bez konieczności usuwania zadania.
+ Sortowanie według daty przypomnienia – aby najbliższe zadania były wyświetlane jako pierwsze.
+ Eksport listy zadań – możliwość zapisania zadań do pliku tekstowego lub CSV, aby można je było udostępnić lub przenieść na inne urządzenie.

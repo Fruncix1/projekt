@@ -5,26 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lista_zadań"
         mc:Ignorable="d"
-        Title="Lista Zadań" Height="562.5" Width="975" >
-    <Grid Margin="-18,-69,-43,-84">
-        <TextBox Name="TaskInput" Height="40" Margin="45,103,195,512"/>
-        <DatePicker Name="ReminderDatePicker" Width="400" Height="30" Margin="45,68,573,557"/>
-        <StackPanel>
-            <TextBlock Text="Wpisz godzinę (HH:mm):" Margin="101,80,40,0" Width="149" />
-            <TextBox x:Name="ReminderTimeInput" Margin="315,-15,40,0" Width="98" />
+        Title="Lista Zadań" Height="600" Width="1000"
+        Background="LightBlue" Foreground="Black" FontFamily="Segoe UI" FontSize="14">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Data i czas -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="2" Margin="0 0 0 10">
+            <DatePicker Name="ReminderDatePicker" Width="200" Margin="0 0 10 0"/>
+            <TextBlock Text="Godzina (HH:mm):" VerticalAlignment="Center" Margin="0 0 5 0"/>
+            <TextBox x:Name="ReminderTimeInput" Width="80"/>
         </StackPanel>
-        <Button Content="Dodaj zadanie" Height="33.3" Width="120" Margin="831,94,54,503" Click="Add_Task"/>
-        <ListBox Name="TaskList" Height="406.25" Margin="0,145,73,60" HorizontalAlignment="Right" Width="900">
+
+        <!-- Nazwa zadania + priorytet + przycisk -->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" Margin="0 0 0 10">
+            <TextBox Name="TaskInput" Width="400" Height="30" Margin="0 0 10 0"/>
+            <ComboBox Name="PriorityComboBox" Width="150" Margin="0 0 10 0">
+                <ComboBoxItem Content="Low"/>
+                <ComboBoxItem Content="Medium"/>
+                <ComboBoxItem Content="High"/>
+            </ComboBox>
+            <Button Content="Dodaj zadanie" Width="120" Click="Add_Task"/>
+        </StackPanel>
+
+        <!-- Lista zadań -->
+        <ListBox Name="TaskList" Grid.Row="2" Grid.ColumnSpan="2" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Usuń zadanie" Click="Remove_Task"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>
-        <ComboBox Name="PriorityComboBox" Margin="714,77,53,580">
-            <ComboBoxItem>Low</ComboBoxItem>
-            <ComboBoxItem>Medium</ComboBoxItem>
-            <ComboBoxItem>High</ComboBoxItem>
-        </ComboBox>
     </Grid>
 </Window>

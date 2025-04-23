@@ -45,7 +45,7 @@ namespace Lista_zadań
                     DateTime reminderDateTime = reminderDate.Value.Date + selectedTime;
 
                     // Pobranie wybranego priorytetu
-                    Priority selectedPriority = (Priority)PriorityComboBox.SelectedIndex;
+                    Priority selectedPriority = (Priority)5;
 
                     _taskManager.AddTask(TaskInput.Text, reminderDateTime, selectedPriority);
 
@@ -56,11 +56,13 @@ namespace Lista_zadań
 
                     RefreshTaskList();
                 }
-                else
-                {
-                    MessageBox.Show("Wybierz datę przypomnienia!", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+
             }
+            else
+            {
+                MessageBox.Show("Wprowadź poprawny format godziny (np. 14:30)", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+
         }
 
 

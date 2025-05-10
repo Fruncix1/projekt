@@ -34,7 +34,9 @@
                 <ComboBoxItem Content="Medium"/>
                 <ComboBoxItem Content="High"/>
             </ComboBox>
-            <Button Content="Dodaj zadanie" Width="120" Click="Add_Task"/>
+            <Button Content="Dodaj zadanie" Width="120" Click="Add_Task" Margin="0 0 10 0"/>
+            <Button Content="Eksportuj zadania" Click="ExportTasks" Width="120" />
+
         </StackPanel>
 
         <!-- Lista zadań -->
@@ -42,6 +44,7 @@
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Usuń zadanie" Click="Remove_Task"/>
+                    <MenuItem Header="Edytuj zadanie" Click="Edit_Task"/>
                 </ContextMenu>
             </ListBox.ContextMenu>
         </ListBox>

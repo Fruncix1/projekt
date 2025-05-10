@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+
 
 namespace Lista_zadań
 {
@@ -27,9 +30,34 @@ namespace Lista_zadań
         {
             InitializeComponent(); // Inicjalizacja komponentów interfejsu użytkownika
             _reminderTimer = new System.Windows.Threading.DispatcherTimer();
-            _reminderTimer.Interval = TimeSpan.FromSeconds(2);
+            _reminderTimer.Interval = TimeSpan.FromSeconds(5);
             _reminderTimer.Tick += CheckReminders;
             _reminderTimer.Start();
+
+
+        }
+
+        private void ExportTasks(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+            saveFileDialog.Filter = "CSV file (*.csv)|*.csv|Text file (*.txt)|*.txt";
+            saveFileDialog.FileName = "ListaZadan";
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using (var writer = new StreamWriter(saveFileDialog.FileName))
+                {
+                    writer.WriteLine("Nazwa,Data przypomnienia,Priorytet");
+
+                    foreach (var task in _taskManager.Tasks)
+                    {
+                        string reminder = task.ReminderDate.HasValue ? task.ReminderDate.Value.ToString("dd.MM.yyyy HH:mm") : "";
+                        writer.WriteLine($"{task.Name},{reminder},{task.PriorityLevel}");
+                    }
+                }
+
+                MessageBox.Show("Zadania zostały wyeksportowane.", "Eksport zakończony", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         // Metoda obsługująca dodawanie nowego zadania
@@ -45,7 +73,7 @@ namespace Lista_zadań
                     DateTime reminderDateTime = reminderDate.Value.Date + selectedTime;
 
                     // Pobranie wybranego priorytetu
-                    Priority selectedPriority = (Priority)5;
+                    Priority selectedPriority = (Priority)PriorityComboBox.SelectedIndex;
 
                     _taskManager.AddTask(TaskInput.Text, reminderDateTime, selectedPriority);
 
@@ -65,7 +93,6 @@ namespace Lista_zadań
 
         }
 
-
         // Metoda obsługująca usuwanie wybranego zadania
         private void Remove_Task(object sender, RoutedEventArgs e)
         {
@@ -79,19 +106,55 @@ namespace Lista_zadań
           }
         }
 
+        private void Edit_Task(object sender, RoutedEventArgs e)
+        {
+            if (TaskList.SelectedItem is Task selectedTask)
+            {
+                DateTime? newDate = ReminderDatePicker.SelectedDate;
+                TimeSpan newTime;
+
+                if (TimeSpan.TryParse(ReminderTimeInput.Text, out newTime))
+                {
+                    if (newDate.HasValue)
+                    {
+                        DateTime newReminderDateTime = newDate.Value.Date + newTime;
+
+                        Priority newPriority = (Priority)PriorityComboBox.SelectedIndex;
+                        string newName = TaskInput.Text;
+
+                        _taskManager.EditTask(selectedTask, newName, newReminderDateTime, newPriority);
+
+                        TaskInput.Clear();
+                        ReminderDatePicker.SelectedDate = null;
+                        ReminderTimeInput.Clear();
+                        PriorityComboBox.SelectedIndex = 1;
+
+                        RefreshTaskList();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Wprowadź poprawny format godziny (np. 14:30)", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+        }
+        
         // Metoda odświeżająca widok listy zadań
         private void RefreshTaskList()
         {
-            // Czyszczenie listy zadań w widoku
             TaskList.Items.Clear();
 
-            // Dodanie wszystkich zadań z menedżera do widoku
-            foreach (var task in _taskManager.Tasks)
+            // Sortowanie zadań według daty przypomnienia (najbliższe pierwsze)
+            var sortedTasks = _taskManager.Tasks
+                .OrderBy(t => t.ReminderDate ?? DateTime.MaxValue)
+                .ToList();
+
+            foreach (var task in sortedTasks)
             {
                 TaskList.Items.Add(task);
             }
         }
-
+        
         private void CheckReminders(object sender, EventArgs e)
         {
             DateTime now = DateTime.Now;
@@ -107,11 +170,8 @@ namespace Lista_zadań
                     task.IsReminderTriggered = true;
                 }
             }
-
             RefreshTaskList();
         }
-
-
         // Priorytety dla zadań
         public enum Priority
         {
@@ -120,7 +180,6 @@ namespace Lista_zadań
             Wysoki,
             Krytyczny
         }
-
         // Klasa reprezentująca pojedyncze zadanie
         public class Task
         {
@@ -128,7 +187,7 @@ namespace Lista_zadań
             public DateTime? ReminderDate { get; set; } // Data i godzina przypomnienia
             public bool IsReminderTriggered { get; set; } // Flaga dla przypomnienia
             public Priority PriorityLevel { get; set; } // Priorytet zadania
-
+            
             // Konstruktor zadania z priorytetem
             public Task(string name, DateTime? reminderDate = null, Priority priority = Priority.Średni)
             {
@@ -137,7 +196,6 @@ namespace Lista_zadań
                 IsReminderTriggered = false;
                 PriorityLevel = priority;
             }
-
             // Przeciążenie metody ToString() do wyświetlania zadania
             public override string ToString()
             {
@@ -146,7 +204,6 @@ namespace Lista_zadań
                     : $"{Name} [Priorytet: {PriorityLevel}]";
             }
         }
-
 
         // Klasa menedżera zadań, odpowiedzialna za zarządzanie listą zadań
         public class TaskManager
@@ -162,17 +219,27 @@ namespace Lista_zadań
                     _tasks = _tasks.OrderByDescending(t => t.PriorityLevel).ToList(); // Sortowanie po priorytecie
                 }
             }
-
             // Metoda usuwająca zadanie z listy na podstawie jego nazwy
             public void RemoveTask(Task taskToRemove)
             {
                 _tasks.Remove(taskToRemove);
             }
-
+            // Metoda do edycji istniejącego zadania
+            public void EditTask(Task taskToEdit, string newName, DateTime? newReminderDate, Priority newPriority)
+            {
+                if (taskToEdit != null)
+                {
+                    taskToEdit.Name = newName;
+                    taskToEdit.ReminderDate = newReminderDate;
+                    taskToEdit.PriorityLevel = newPriority;
+                    _tasks = _tasks
+                        .OrderByDescending(t => t.PriorityLevel)
+                        .ThenBy(t => t.ReminderDate ?? DateTime.MaxValue)
+                        .ToList(); // Sortowanie po priorytecie i dacie
+                }
+            }
             // Właściwość zwracająca listę zadań jako tylko do odczytu
             public IReadOnlyList<Task> Tasks => _tasks.AsReadOnly();
         }
-
     }
-
 }
